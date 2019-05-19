@@ -1,0 +1,91 @@
+﻿/*  [ALTERAÇÕES MM]  */
+
+ALTER TABLE `venda`
+	CHANGE COLUMN `total` `total` DECIMAL(7,2) NULL,
+	CHANGE COLUMN `data` `data` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	CHANGE COLUMN `cliente_id` `cliente_id` INT(11) NULL,
+	ADD COLUMN `status` ENUM('A','F','C') NULL DEFAULT NULL COMMENT 'A = Aberta F = Fechada C = Cancelada';
+	
+
+	
+/* [FORMATO DE ENVIO DA VENDA] */
+
+{"cliente_id":1,"desconto":"0","valor":"00.00","status":"A","itens":[{"produto_id":1,"quantidade":"2","valor_unitario":"3.00"},{"produto_id":2,"quantidade":"1","valor_unitario":"1.50"}]}
+
+-----------------------------------------------------------------
+
+ALTER TABLE `entrada_produto`
+	ALTER `fornecedor_id` DROP DEFAULT;
+ALTER TABLE `entrada_produto`
+	CHANGE COLUMN `fornecedor_id` `fornecedor_id` INT(11) NULL AFTER `produto_id`;
+
+------------------------------------------------------------------
+
+ALTER TABLE `venda`
+	ALTER `cliente_id` DROP DEFAULT;
+ALTER TABLE `venda`
+	CHANGE COLUMN `cliente_id` `cliente_id` INT(11) NULL AFTER `id`,
+	CHANGE COLUMN `desconto` `desconto` VARCHAR(45) NULL DEFAULT '0' AFTER `cliente_id`;
+
+------------------------------------------------------------------
+
+CREATE TABLE `forma_pagto` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`nome` VARCHAR(200) NOT NULL,
+	`active` ENUM('y','n') NOT NULL DEFAULT 'y',
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+-------------------------------------------------------------------
+
+INSERT INTO `forma_pagto` (`id`, `nome`, `active`) VALUES (1, 'Dinheiro', 'y');
+INSERT INTO `forma_pagto` (`id`, `nome`, `active`) VALUES (2, 'Cartao Debito', 'y');
+INSERT INTO `forma_pagto` (`id`, `nome`, `active`) VALUES (3, 'Cartao Credito', 'y');
+INSERT INTO `forma_pagto` (`id`, `nome`, `active`) VALUES (4, 'Conta Cliente', 'y');
+
+
+--------------------------------------------------------------------
+
+ALTER TABLE `pessoa`
+	CHANGE COLUMN `dt_cadastro` `dt_cadastro` DATETIME NULL DEFAULT CURRENT_TIMESTAMP AFTER `dt_atualizacao`;
+
+ALTER TABLE `pessoa`
+	CHANGE COLUMN `dt_atualizacao` `dt_atualizacao` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `email`;
+
+
+--------------------------------------------------------------------
+
+ALTER TABLE `produto`
+	ADD COLUMN `estoque_min` INT(11) NULL DEFAULT '0' AFTER `unidade_id`,
+	ADD COLUMN `estoque` INT(11) NULL DEFAULT '0' AFTER `estoque_min`;
+
+--------------------------------------------------------------------
+
+ALTER TABLE `entrada_produto`
+	ADD COLUMN `tipo` ENUM('E','S') NOT NULL DEFAULT 'E' COMMENT 'E=Entrada, S=Saida' AFTER `id`;
+
+
+--------------------------------------------------------------------
+ALTER TABLE `entrada_produto`
+	ADD COLUMN `motivo_saida` TEXT NULL DEFAULT NULL AFTER `valor_total`;
+--------------------------------------------------------------------
+
+CREATE TABLE `comanda_mesa` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`codigo` VARCHAR(50) NOT NULL,
+	`active` ENUM('y','n') NOT NULL DEFAULT 'y',
+	PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+;
+
+---------------------------------------------------------------------
+ALTER TABLE `venda`
+	ADD COLUMN `comanda_mesa_id` INT NULL DEFAULT NULL AFTER `status`;
+---------------------------------------------------------------------
+
+ALTER TABLE `venda`
+	ADD CONSTRAINT `FK_venda_comanda_mesa` FOREIGN KEY (`comanda_mesa_id`) REFERENCES `comanda_mesa` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION;

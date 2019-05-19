@@ -1,0 +1,8 @@
+﻿[Banco]
+host          = localhost
+user          = root
+pass          = 
+db            = mm_bd
+[Update]
+dir		  	  = util/update
+log			  = util/update.log

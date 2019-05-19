@@ -1,0 +1,57 @@
+Sistema balcão
+3 - Controle de usuários
+4 - Controle de Acesso
+	- Tela
+	- Operação : Ver, Novo, Editar e Excluir
+5 - Fechamento de caixa
+	- Resumo das formas de pagamento
+6 - Buscas e Filtros
+	- Relatório
+	- Notificação
+	- Aviso de Esgotamento de estoque
+
+8 - Configurações
+	- Nome Empresa Exibido
+	- Logo
+9 - Suporte
+	- Ajuda
+	- Atendimento
+	- Créditos
+10 - Tela tablet
+12 - Exportar dados excel
+16 - Cancelar Venda com senha
+6 - Rever Update SQL automatico
+9 - Pesquisa Produto tela venda
+10 - Produto por código de barra ( ProdutoID, ou valor livre)
+
+
+
+---- Feitos ------------------------------------------------------------------------------------------------------
+1 - Login e Senha - OK
+2 - Esqueci senha - OK
+5 - Fechamento de caixa
+	- Abrir tela venda com login, senha e valor atual do caixa - OK
+	- Atalho para fechamento do caixa, abrir tela com valor atual do caixa em dinheiro OK
+7 - Controle de Estoque
+	- Lançamento Entrada - OK
+		- Acrescentar ao estoque do produto - OK
+	- Lançamento Saída - OK
+		- Abater do estoque do produto - OK
+	- Acrescentar caixa_id na tabela venda - OK
+9 - Suporte
+	- Alterar Senha - OK
+11 - Controle de pedido por mesa
+	- Acrescentar campo na tabela venda OK
+14 - Cadastro de Pessoas Fisica e Juridica
+	- Limite de Crédito - OK
+	- Data limite pagamento de venda - OK
+15 - Formas de Pagamento - OK
+---------- Ajustes
+1 - Quando o sistema identifica um registro ele returna o objeto, e não uma lista com 1 registro - OK
+2 - Venda! pegar somente o que tem no estoque - OK
+4 - Reativar cadastro de Empresa - OK
+5 - Venda - avisar de inadimplente em caso de forma de pagamento "Conta Cliente" e fracionado:conta-cliente OK
+7 - Acerto de Estoque POSITIVO - OK
+8 - Venda conta-cliente só para quem tem conta (y) - OK
+11 - Cobrança por peso, etc... OK
+12 - Lançamento livre de venda OK
